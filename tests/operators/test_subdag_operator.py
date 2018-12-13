@@ -24,7 +24,8 @@ from mock import Mock
 import airflow
 from airflow.exceptions import AirflowException
 from airflow.executors.sequential_executor import SequentialExecutor
-from airflow.models import DAG, DagBag
+from airflow.models import DAG
+from airflow.orm import DagBag
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.subdag_operator import SubDagOperator
 from airflow.utils.timezone import datetime

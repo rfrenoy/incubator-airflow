@@ -23,6 +23,7 @@ import unittest
 from freezegun import freeze_time
 from mock import patch
 
+from airflow.orm import DagBag
 from airflow import AirflowException
 from airflow.api.client.local_client import Client
 from airflow import models
@@ -60,7 +61,7 @@ class TestLocalClient(unittest.TestCase):
     def test_trigger_dag(self, mock):
         client = self.client
         test_dag_id = "example_bash_operator"
-        models.DagBag(include_examples=True)
+        DagBag(include_examples=True)
 
         # non existent
         with self.assertRaises(AirflowException):

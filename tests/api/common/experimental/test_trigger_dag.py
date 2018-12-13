@@ -29,7 +29,7 @@ from airflow.api.common.experimental.trigger_dag import _trigger_dag
 class TriggerDagTests(unittest.TestCase):
 
     @mock.patch('airflow.models.DagRun')
-    @mock.patch('airflow.models.DagBag')
+    @mock.patch('airflow.orm.DagBag')
     def test_trigger_dag_dag_not_found(self, dag_bag_mock, dag_run_mock):
         dag_bag_mock.dags = []
         self.assertRaises(
@@ -45,7 +45,7 @@ class TriggerDagTests(unittest.TestCase):
         )
 
     @mock.patch('airflow.models.DagRun')
-    @mock.patch('airflow.models.DagBag')
+    @mock.patch('airflow.orm.DagBag')
     def test_trigger_dag_dag_run_exist(self, dag_bag_mock, dag_run_mock):
         dag_id = "dag_run_exist"
         dag = DAG(dag_id)
@@ -66,7 +66,7 @@ class TriggerDagTests(unittest.TestCase):
 
     @mock.patch('airflow.models.DAG')
     @mock.patch('airflow.models.DagRun')
-    @mock.patch('airflow.models.DagBag')
+    @mock.patch('airflow.orm.DagBag')
     def test_trigger_dag_include_subdags(self, dag_bag_mock, dag_run_mock, dag_mock):
         dag_id = "trigger_dag"
         dag_bag_mock.dags = [dag_id]
@@ -89,7 +89,7 @@ class TriggerDagTests(unittest.TestCase):
 
         self.assertEqual(3, len(triggers))
 
-    @mock.patch('airflow.models.DagBag')
+    @mock.patch('airflow.orm.DagBag')
     def test_trigger_dag_with_str_conf(self, dag_bag_mock):
         dag_id = "trigger_dag_with_str_conf"
         dag = DAG(dag_id)
@@ -108,7 +108,7 @@ class TriggerDagTests(unittest.TestCase):
 
         self.assertEquals(triggers[0].conf, json.loads(conf))
 
-    @mock.patch('airflow.models.DagBag')
+    @mock.patch('airflow.orm.DagBag')
     def test_trigger_dag_with_dict_conf(self, dag_bag_mock):
         dag_id = "trigger_dag_with_dict_conf"
         dag = DAG(dag_id)

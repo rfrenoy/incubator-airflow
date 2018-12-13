@@ -20,8 +20,9 @@ import unittest
 
 from datetime import timedelta
 
+from airflow.orm import DagBag
 from airflow import configuration
-from airflow import models, DAG
+from airflow import DAG
 from airflow.sensors.time_delta_sensor import TimeDeltaSensor
 from airflow.utils.timezone import datetime
 
@@ -35,7 +36,7 @@ TEST_DAG_ID = 'unit_tests'
 class TimedeltaSensorTest(unittest.TestCase):
     def setUp(self):
         configuration.load_test_config()
-        self.dagbag = models.DagBag(
+        self.dagbag = DagBag(
             dag_folder=DEV_NULL, include_examples=True)
         self.args = {'owner': 'airflow', 'start_date': DEFAULT_DATE}
         self.dag = DAG(TEST_DAG_ID, default_args=self.args)

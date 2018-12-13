@@ -27,6 +27,7 @@ from functools import wraps
 import os
 import contextlib
 
+from airflow.orm import DagBag
 from airflow import settings
 from airflow.utils.log.logging_mixin import LoggingMixin
 
@@ -300,7 +301,7 @@ def initdb(rbac=False):
         session.add(KET(know_event_type='Marketing Campaign'))
     session.commit()
 
-    dagbag = models.DagBag()
+    dagbag = DagBag()
     # Save individual DAGs in the ORM
     for dag in dagbag.dags.values():
         dag.sync_to_db()

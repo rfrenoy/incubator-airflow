@@ -41,6 +41,7 @@ from sqlalchemy.orm.session import make_transient
 
 from airflow import configuration as conf
 from airflow import executors, models, settings
+from airflow.orm import DagBag
 from airflow.exceptions import AirflowException
 from airflow.models import DAG, DagRun
 from airflow.settings import Stats
@@ -1420,7 +1421,7 @@ class SchedulerJob(BaseJob):
         3. Send emails for tasks that have missed SLAs.
 
         :param dagbag: a collection of DAGs to process
-        :type dagbag: models.DagBag
+        :type dagbag: DagBag
         :param dags: the DAGs from the DagBag to process
         :type dags: DAG
         :param tis_out: A queue to add generated TaskInstance objects
@@ -1479,7 +1480,7 @@ class SchedulerJob(BaseJob):
                     self.log.error(msg)
                     try:
                         simple_dag = simple_dag_bag.get_dag(dag_id)
-                        dagbag = models.DagBag(simple_dag.full_filepath)
+                        dagbag = DagBag(simple_dag.full_filepath)
                         dag = dagbag.get_dag(dag_id)
                         ti.task = dag.get_task(task_id)
                         ti.handle_failure(msg)
@@ -1704,7 +1705,7 @@ class SchedulerJob(BaseJob):
         simple_dags = []
 
         try:
-            dagbag = models.DagBag(file_path, include_examples=False)
+            dagbag = DagBag(file_path, include_examples=False)
         except Exception:
             self.log.exception("Failed at reloading the DAG file %s", file_path)
             Stats.incr('dag_file_refresh_error', 1, 1)

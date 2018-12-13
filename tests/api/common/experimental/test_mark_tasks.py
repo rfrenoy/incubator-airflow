@@ -20,6 +20,7 @@
 import unittest
 from datetime import datetime
 
+from airflow.orm import DagBag
 from airflow import configuration, models
 from airflow.api.common.experimental.mark_tasks import (
     set_state, _create_dagruns, set_dag_run_state_to_success, set_dag_run_state_to_failed,
@@ -37,7 +38,7 @@ configuration.load_test_config()
 class TestMarkTasks(unittest.TestCase):
 
     def setUp(self):
-        self.dagbag = models.DagBag(include_examples=True)
+        self.dagbag = DagBag(include_examples=True)
         self.dag1 = self.dagbag.dags['example_bash_operator']
         self.dag2 = self.dagbag.dags['example_subdag_operator']
 
@@ -223,7 +224,7 @@ class TestMarkTasks(unittest.TestCase):
 
 class TestMarkDAGRun(unittest.TestCase):
     def setUp(self):
-        self.dagbag = models.DagBag(include_examples=True)
+        self.dagbag = DagBag(include_examples=True)
         self.dag1 = self.dagbag.dags['example_bash_operator']
         self.dag2 = self.dagbag.dags['example_subdag_operator']
 

@@ -18,7 +18,7 @@
 # under the License.
 
 from airflow.exceptions import DagNotFound, DagRunNotFound
-from airflow.models import DagBag
+from airflow.orm import DagBag
 
 
 def get_dag_run_state(dag_id, execution_date):

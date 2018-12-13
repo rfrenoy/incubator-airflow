@@ -22,7 +22,8 @@ from datetime import timedelta, time
 from airflow import DAG, configuration, settings
 from airflow import exceptions
 from airflow.exceptions import AirflowSensorTimeout
-from airflow.models import TaskInstance, DagBag
+from airflow.models import TaskInstance
+from airflow.orm import DagBag
 from airflow.operators.bash_operator import BashOperator
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.sensors.external_task_sensor import ExternalTaskSensor

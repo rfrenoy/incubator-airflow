@@ -21,6 +21,7 @@ import os
 import subprocess
 import unittest
 
+from airflow.orm import DagBag
 from airflow import models, settings, configuration, AirflowException
 from airflow.utils.timezone import datetime
 
@@ -148,7 +149,7 @@ class BaseGcpIntegrationTestCase(unittest.TestCase):
         os.remove(os.path.join(TESTS_DAG_FOLDER, self.dag_name))
 
     def _run_dag(self):
-        dag_bag = models.DagBag(dag_folder=TESTS_DAG_FOLDER, include_examples=False)
+        dag_bag = DagBag(dag_folder=TESTS_DAG_FOLDER, include_examples=False)
         self.args = {'owner': 'airflow', 'start_date': DEFAULT_DATE}
         dag = dag_bag.get_dag(self.dag_id)
         dag.clear(reset_dag_runs=True)

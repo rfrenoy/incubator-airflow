@@ -29,6 +29,8 @@ import psutil
 import pytz
 import subprocess
 from argparse import Namespace
+
+from airflow.orm import DagBag
 from airflow import settings
 import airflow.bin.cli as cli
 from airflow.bin.cli import get_num_ready_workers_running, run, get_dag
@@ -227,8 +229,8 @@ class TestCLI(unittest.TestCase):
             "airflow/example_dags"
         )
 
-        dagbag = models.DagBag(dag_folder=EXAMPLE_DAGS_FOLDER,
-                               include_examples=False)
+        dagbag = DagBag(dag_folder=EXAMPLE_DAGS_FOLDER,
+                                           include_examples=False)
         dag_ids = ['example_bash_operator',  # schedule_interval is '0 0 * * *'
                    'latest_only',  # schedule_interval is timedelta(hours=4)
                    'example_python_operator',  # schedule_interval=None

@@ -18,7 +18,7 @@
 # under the License.
 
 from airflow.exceptions import DagNotFound, TaskNotFound
-from airflow.models import DagBag
+from airflow.orm import DagBag
 
 
 def get_task(dag_id, task_id):

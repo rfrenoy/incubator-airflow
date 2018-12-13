@@ -19,7 +19,8 @@
 from flask import url_for
 
 from airflow.exceptions import AirflowException
-from airflow.models import DagBag, DagRun
+from airflow.models import DagRun
+from airflow.orm import DagBag
 
 
 def get_dag_runs(dag_id, state=None):

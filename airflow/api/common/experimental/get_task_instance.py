@@ -19,7 +19,7 @@
 
 from airflow.exceptions import (DagNotFound, TaskNotFound,
                                 DagRunNotFound, TaskInstanceNotFound)
-from airflow.models import DagBag
+from airflow.orm import DagBag
 
 
 def get_task_instance(dag_id, task_id, execution_date):

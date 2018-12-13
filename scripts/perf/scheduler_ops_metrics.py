@@ -23,7 +23,8 @@ import sys
 
 from airflow import configuration, settings
 from airflow.jobs import SchedulerJob
-from airflow.models import DagBag, DagModel, DagRun, TaskInstance
+from airflow.models import DagModel, DagRun, TaskInstance
+from airflow.orm import DagBag
 from airflow.utils import timezone
 from airflow.utils.state import State
 

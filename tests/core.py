@@ -42,6 +42,7 @@ from numpy.testing import assert_array_almost_equal
 from six.moves.urllib.parse import urlencode
 from time import sleep
 
+from airflow.orm import DagBag
 from airflow import configuration
 from airflow.executors import SequentialExecutor
 from airflow.models import Variable
@@ -108,7 +109,7 @@ class CoreTest(unittest.TestCase):
 
     def setUp(self):
         configuration.conf.load_test_config()
-        self.dagbag = models.DagBag(
+        self.dagbag = DagBag(
             dag_folder=DEV_NULL, include_examples=True)
         self.args = {'owner': 'airflow', 'start_date': DEFAULT_DATE}
         self.dag = DAG(TEST_DAG_ID, default_args=self.args)
@@ -1075,7 +1076,7 @@ class CliTests(unittest.TestCase):
         self.app.config['TESTING'] = True
 
         self.parser = cli.CLIFactory.get_parser()
-        self.dagbag = models.DagBag(dag_folder=DEV_NULL, include_examples=True)
+        self.dagbag = DagBag(dag_folder=DEV_NULL, include_examples=True)
         settings.configure_orm()
         self.session = Session
 
@@ -1722,7 +1723,7 @@ class SecurityTests(unittest.TestCase):
         app.config['TESTING'] = True
         self.app = app.test_client()
 
-        self.dagbag = models.DagBag(
+        self.dagbag = DagBag(
             dag_folder=DEV_NULL, include_examples=True)
         self.dag_bash = self.dagbag.dags['example_bash_operator']
         self.runme_0 = self.dag_bash.get_task('runme_0')
@@ -1814,7 +1815,7 @@ class WebUiTests(unittest.TestCase):
         app.config['WTF_CSRF_METHODS'] = []
         self.app = app.test_client()
 
-        self.dagbag = models.DagBag(include_examples=True)
+        self.dagbag = DagBag(include_examples=True)
         self.dag_bash = self.dagbag.dags['example_bash_operator']
         self.dag_python = self.dagbag.dags['example_python_operator']
         self.sub_dag = self.dagbag.dags['example_subdag_operator']

@@ -29,7 +29,8 @@ from airflow import configuration as conf
 from airflow.configuration import mkdir_p
 from airflow.jobs import DagFileProcessor
 from airflow.jobs import LocalTaskJob as LJ
-from airflow.models import DagBag, TaskInstance as TI
+from airflow.models import TaskInstance as TI
+from airflow.orm import DagBag
 from airflow.utils import timezone
 from airflow.utils.dag_processing import (DagFileProcessorAgent, DagFileProcessorManager,
                                           SimpleTaskInstance)

@@ -33,6 +33,7 @@ from flask._compat import PY2
 from urllib.parse import quote_plus
 from werkzeug.test import Client
 
+from airflow.orm import DagBag
 from airflow import configuration as conf
 from airflow import models, settings
 from airflow.config_templates.airflow_local_settings import DEFAULT_LOGGING_CONFIG
@@ -293,7 +294,7 @@ class TestAirflowBaseViews(TestBase):
         self.session.commit()
 
     def prepare_dagruns(self):
-        dagbag = models.DagBag(include_examples=True)
+        dagbag = DagBag(include_examples=True)
         self.bash_dag = dagbag.dags['example_bash_operator']
         self.sub_dag = dagbag.dags['example_subdag_operator']
         self.xcom_dag = dagbag.dags['example_xcom']
@@ -879,7 +880,7 @@ class TestDagACLView(TestBase):
         self.session.commit()
 
     def prepare_dagruns(self):
-        dagbag = models.DagBag(include_examples=True)
+        dagbag = DagBag(include_examples=True)
         self.bash_dag = dagbag.dags['example_bash_operator']
         self.sub_dag = dagbag.dags['example_subdag_operator']
 

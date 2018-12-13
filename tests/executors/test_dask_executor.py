@@ -20,7 +20,7 @@
 import unittest
 
 from airflow import configuration
-from airflow.models import DagBag
+from airflow.orm import DagBag
 from airflow.jobs import BackfillJob
 from airflow.utils import timezone
 

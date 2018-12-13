@@ -28,7 +28,7 @@ Create Date: 2017-06-19 16:53:12.851141
 from alembic import op
 import sqlalchemy as sa
 from airflow import settings
-from airflow.models import DagBag
+from airflow.orm import DagBag
 
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.engine.reflection import Inspector

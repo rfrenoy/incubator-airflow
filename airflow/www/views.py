@@ -60,6 +60,7 @@ from wtforms import (
     StringField, validators)
 
 import airflow
+from airflow.orm import DagBag
 from airflow import configuration as conf
 from airflow import models
 from airflow import settings
@@ -89,7 +90,7 @@ CHART_LIMIT = 200000
 
 UTF8_READER = codecs.getreader('utf-8')
 
-dagbag = models.DagBag(settings.DAGS_FOLDER)
+dagbag = DagBag(settings.DAGS_FOLDER)
 
 login_required = airflow.login.login_required
 current_user = airflow.login.current_user

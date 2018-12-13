@@ -49,6 +49,7 @@ from sqlalchemy import or_, desc, and_, union_all
 from wtforms import SelectField, validators
 
 import airflow
+from airflow.orm import DagBag
 from airflow import configuration as conf
 from airflow import models, jobs
 from airflow import settings
@@ -73,9 +74,9 @@ from airflow.www_rbac.widgets import AirflowModelListWidget
 
 PAGE_SIZE = conf.getint('webserver', 'page_size')
 if os.environ.get('SKIP_DAGS_PARSING') != 'True':
-    dagbag = models.DagBag(settings.DAGS_FOLDER)
+    dagbag = DagBag(settings.DAGS_FOLDER)
 else:
-    dagbag = models.DagBag
+    dagbag = DagBag
 
 
 def get_date_time_num_runs_dag_runs_form_data(request, session, dag):

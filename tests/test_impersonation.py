@@ -24,6 +24,7 @@ import unittest
 import logging
 
 from airflow import jobs, models
+from airflow.orm import DagBag
 from airflow.utils.state import State
 from airflow.utils.timezone import datetime
 
@@ -45,7 +46,7 @@ logger = logging.getLogger(__name__)
 
 class ImpersonationTest(unittest.TestCase):
     def setUp(self):
-        self.dagbag = models.DagBag(
+        self.dagbag = DagBag(
             dag_folder=TEST_DAG_FOLDER,
             include_examples=False,
         )

@@ -39,13 +39,13 @@ import sqlalchemy
 from mock import Mock, patch, MagicMock, PropertyMock
 
 from airflow.utils.db import create_session
-from airflow import AirflowException, settings, models
-from airflow import configuration
+from airflow import AirflowException, settings, models, configuration
 from airflow.bin import cli
 import airflow.example_dags
 from airflow.executors import BaseExecutor, SequentialExecutor
 from airflow.jobs import BaseJob, BackfillJob, SchedulerJob, LocalTaskJob
-from airflow.models import DAG, DagModel, DagBag, DagRun, Pool, TaskInstance as TI
+from airflow.models import DAG, DagModel, DagRun, Pool, TaskInstance as TI
+from airflow.orm import DagBag
 from airflow.operators.bash_operator import BashOperator
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.task.task_runner.base_task_runner import BaseTaskRunner
@@ -1183,7 +1183,7 @@ class LocalTaskJobTest(unittest.TestCase):
         Test that ensures that mark_success in the UI doesn't cause
         the task to fail, and that the task exits
         """
-        dagbag = models.DagBag(
+        dagbag = DagBag(
             dag_folder=TEST_DAG_FOLDER,
             include_examples=False,
         )
@@ -1220,7 +1220,7 @@ class LocalTaskJobTest(unittest.TestCase):
         self.assertEqual(State.SUCCESS, ti.state)
 
     def test_localtaskjob_double_trigger(self):
-        dagbag = models.DagBag(
+        dagbag = DagBag(
             dag_folder=TEST_DAG_FOLDER,
             include_examples=False,
         )
@@ -2803,8 +2803,8 @@ class SchedulerJobTest(unittest.TestCase):
 
         dagbag.bag_dag(dag=dag, root_dag=dag, parent_dag=dag)
 
-        @mock.patch('airflow.models.DagBag', return_value=dagbag)
-        @mock.patch('airflow.models.DagBag.collect_dags')
+        @mock.patch('airflow.orm.DagBag', return_value=dagbag)
+        @mock.patch('airflow.orm.DagBag.collect_dags')
         def do_schedule(function, function2):
             # Use a empty file since the above mock will return the
             # expected DAGs. Also specify only a single file so that it doesn't
@@ -2975,8 +2975,8 @@ class SchedulerJobTest(unittest.TestCase):
 
         dagbag.bag_dag(dag=dag, root_dag=dag, parent_dag=dag)
 
-        @mock.patch('airflow.models.DagBag', return_value=dagbag)
-        @mock.patch('airflow.models.DagBag.collect_dags')
+        @mock.patch('airflow.orm.DagBag', return_value=dagbag)
+        @mock.patch('airflow.orm.DagBag.collect_dags')
         def do_schedule(function, function2):
             # Use a empty file since the above mock will return the
             # expected DAGs. Also specify only a single file so that it doesn't

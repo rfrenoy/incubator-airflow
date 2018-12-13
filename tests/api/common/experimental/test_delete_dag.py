@@ -19,6 +19,7 @@
 
 import unittest
 
+from airflow.orm import DagBag
 from airflow import models
 from airflow import settings
 from airflow.api.common.experimental.delete_dag import delete_dag
@@ -38,7 +39,7 @@ class TestDeleteDAGCatchError(unittest.TestCase):
 
     def setUp(self):
         self.session = settings.Session()
-        self.dagbag = models.DagBag(include_examples=True)
+        self.dagbag = DagBag(include_examples=True)
         self.dag_id = 'example_bash_operator'
         self.dag = self.dagbag.dags[self.dag_id]
 
