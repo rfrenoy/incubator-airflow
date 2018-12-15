@@ -10,11 +10,11 @@ from datetime import datetime
 
 import six
 
-from airflow import LoggingMixin, configuration, settings, DAG
+from airflow import LoggingMixin, configuration, settings
 from airflow.dag.base_dag import BaseDagBag
 from airflow.exceptions import AirflowDagCycleException
 from airflow.executors import GetDefaultExecutor
-from airflow.models import DagModel, TaskInstance, Stats
+from airflow.models import DagModel, TaskInstance, Stats, DAG
 from airflow.utils import timezone
 from airflow.utils.dag_processing import list_py_file_paths
 from airflow.utils.db import provide_session
